@@ -292,7 +292,7 @@ static void BrowserInit(void)
 	BPtr<char> log_path_abs = os_get_abs_path_ptr(log_path);
 	CefString(&settings.log_file) = log_path_abs;
 	settings.windowless_rendering_enabled = true;
-	settings.no_sandbox = true;
+	settings.no_sandbox = false;
 #if CHROME_VERSION_BUILD > 6533 && CHROME_VERSION_BUILD <= 6613
 	settings.chrome_runtime = true;
 #endif
