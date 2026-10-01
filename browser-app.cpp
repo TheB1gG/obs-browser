@@ -163,6 +163,17 @@ void BrowserApp::OnBeforeCommandLineProcessing(const CefString &, CefRefPtr<CefC
 
 	command_line->AppendSwitchWithValue("autoplay-policy", "no-user-gesture-required");
 	command_line->AppendSwitch("disable-extensions");
+	
+	// Enable Windows GameInput backend by default for better gamepad support in Browser Sources
+	if constexpr (kIsPlatformWindows) {
+		std::string enableFeatures = "EnableWindowsGameInputDataFetcher";
+		if (command_line->HasSwitch("enable-features")) {
+			enableFeatures += ",";
+			enableFeatures.append(command_line->GetSwitchValue("enable-features"));
+		}
+		command_line->AppendSwitchWithValue("enable-features", enableFeatures);
+	}
+	
 	command_line->AppendSwitchWithValue("disable-features", disableFeatures);
 	command_line->AppendSwitch("hide-crash-restore-bubble");
 #ifdef __APPLE__
